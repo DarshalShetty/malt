@@ -42,9 +42,9 @@ EOF
               (* 2 i)))
           0))
 
-  (unsafe-test
-   (check-tensor-equal?  (sum t0)
-                         (tensor 12.0 44.0 76.0 108.0 140.0 172.0)))
+  (check-tensor-equal? (sum t0)
+                       (reshape '(2 3)
+                                (tensor 12.0 44.0 76.0 108.0 140.0 172.0)))
 
 
   (define dup-f
@@ -67,8 +67,9 @@ EOF
       (list (* 2 (car in-f-shape)))))
 
   (define dup (ext1-ρ dup-f dup-f-acc 1 dup-shape-f))
-  (unsafe-test
-   (check-tensor-equal? (dup t0)
+  (check-tensor-equal? (dup t0)
+                       (reshape
+                        '(2 3 8)
                         (tensor 0 2 4 6 0 2 4 6
                                 8 10 12 14 8 10 12 14
                                 16 18 20 22 16 18 20 22
@@ -77,14 +78,15 @@ EOF
                                 40 42 44 46 40 42 44 46)))
 
   (define abs* (ext1-ρ abs (λ (x) "fabs(@{x})") 0 (λ _ '())))
-  (unsafe-test
-   (check-tensor-equal? (abs* (flat '(2 3 4)
-                                    (build-vec 24
-                                               (λ (i)
-                                                 (*
-                                                  (if (even? i) -1 1)
-                                                  (* 2 i))))
-                                    0))
+  (check-tensor-equal? (abs* (flat '(2 3 4)
+                                   (build-vec 24
+                                              (λ (i)
+                                                (*
+                                                 (if (even? i) -1 1)
+                                                 (* 2 i))))
+                                   0))
+                       (reshape
+                        '(2 3 4)
                         (tensor 0 2 4 6
                                 8 10 12 14
                                 16 18 20 22
@@ -131,9 +133,10 @@ EOF
   (define *-ρ (ext2-ρ * (λ (a b) "@{a} * @{b}") 0 0))
   (define t0sqr (*-ρ t0 t0))
 
-  (unsafe-test
-   (check-tensor-equal?
-    t0sqr
+  (check-tensor-equal?
+   t0sqr
+   (reshape
+    '(2 3 4)
     (tensor 0  4 16 36
             64 100 144 196
             256 324 400 484
