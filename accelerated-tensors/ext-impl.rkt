@@ -2,10 +2,16 @@
 (require "tensors/0-vectors.rkt")
 (require "tensors/1-flats.rkt")
 (require (only-in "tensors/2-acc-runtime.rkt"
-                  ext2-∇-kernel/name
                   run-prim2-∇!))
+(require (only-in "tensors/2-acc-kernels.rkt"
+                  ext2-∇-kernel/name))
 (require (only-in "tensors/B-tensor-basics.rkt"
                   merge-flats))
+(require (only-in "tensors/D-fun-to-prealloc.rkt"
+                  functional->preallocated-1-ρ
+                  functional->preallocated-1-∇
+                  functional->preallocated-2-ρ
+                  functional->preallocated-2-∇))
 (require (only-in "tensors/D-extend.rkt"
                   merge-shapes
                   min-shape
@@ -13,10 +19,6 @@
                   flat-ext1-∇
                   flat-ext1-ρ
                   flat-ext2-ρ
-                  functional->preallocated-1-ρ
-                  functional->preallocated-1-∇
-                  functional->preallocated-2-ρ
-                  functional->preallocated-2-∇
                   functional->preallocated-1-ρ-acc
                   functional->preallocated-1-∇-acc
                   functional->preallocated-2-ρ-acc

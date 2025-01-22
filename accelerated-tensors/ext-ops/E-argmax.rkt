@@ -20,7 +20,7 @@
 (define argmax-1-ρ-acc
   (λ (v0 i0 stride0
       v-out i-out stride-out)
-    #<<EOF
+#<<EOF
     float max = -INFINITY;
     float max_i = -1;
     for(int i=@{i0}; i<@{i0}+@{stride0}; i++) {
@@ -44,7 +44,7 @@ EOF
 (define argmax-1-∇-acc
   (λ (g0 v0 i0 stride0
       vz iz stride-z)
-    #<<EOF
+#<<EOF
     for(int i=@{i0}; i<@{i0}+@{stride0}; i++) {
         @{g0}[@{i0}] = 0.0;
     }

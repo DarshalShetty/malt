@@ -64,15 +64,25 @@
   (λ ()
     (get-boolean-param 'disable-unsafe-tests?)))
 
+(define max-kernel-name-len
+  (λ ()
+    (get-param 'max-kernel-name-len)))
+
 ;; Default settings
 (define default-preferences
   `((tensor-implementation learner)
     (accelerate? #t)
     (debug-kernel? (getenv "MALT_DEBUG_KERNEL"))
     (opencl-device-type (getenv "CL_DEVICE_TYPE"))
-    (disable-unsafe-tests? (getenv "MALT_DISABLE_UNSAFE_TESTS"))))
+    (disable-unsafe-tests? (getenv "MALT_DISABLE_UNSAFE_TESTS"))
+    (max-kernel-name-len 15)))
 
 (when (not (settings))
   (init-settings))
 
-(provide tensor-implementation accelerate? debug-kernel? opencl-device-type disable-unsafe-tests?)
+(provide tensor-implementation
+         accelerate?
+         debug-kernel?
+         opencl-device-type
+         disable-unsafe-tests?
+         max-kernel-name-len)

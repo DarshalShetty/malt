@@ -19,7 +19,7 @@
 (define max-1-ρ-acc
   (λ (v0 i0 stride0
       v-out i-out stride-out)
-    #<<EOF
+#<<EOF
     float max = -INFINITY;
     for(int i=@{i0}; i<@{i0}+@{stride0}; i++) {
         max = fmax(max, @{v0}[i]);
@@ -46,7 +46,7 @@ EOF
 (define max-1-∇-acc
   (λ (g0 v0 i0 stride0
       vz iz stride-z)
-    #<<EOF
+#<<EOF
     float z = @{vz}[@{iz}];
     float max = -INFINITY;
     int max_i = -1;

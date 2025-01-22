@@ -121,26 +121,26 @@
 
 (define ensure-shape
   (λ (args)
-    (when (null? args)
-      (error 'tensor "Tensors cannot be empty"))
-    (let ((checked-shape
-           (λ (x) (if (flat? x)
-                      (flat-shape x)
-                      '()))))
-      (unless (and (not (null? args))
-                   (cond
-                     ((number? (car args))
-                      (andmap number? (cdr args)))
-                     ((flat? (car args))
-                      (let ((s (checked-shape (car args))))
-                        (andmap (λ (t)
-                                  (and (flat? t)
-                                       (equal? (checked-shape t) s)))
-                                (cdr args))))
-                     (else #f)))
-        (error 'tensor
-               "Cannot construct a tensor out of these elements: ~a~%"
-               args)))))
+    (cond
+      ((null? args) (error 'tensor "Tensors cannot be empty"))
+      (else
+       (let* ((s (checked-shape args (car args)))
+              (same-shapes?
+               (for/and ((arg (cdr args)))
+                 (equal? (checked-shape args arg) s))))
+         (cond
+           ((not same-shapes?)
+            (error 'tensor
+                   "All tensor elements must have the same shape. Elements: ~a~%"
+                   args))))))))
+
+(define checked-shape
+  (λ (args x)
+    (cond
+      ((flat? x) (flat-shape x))
+      ((number? x) '())
+      (else (error 'tensor "Tensor element must be a tensor. Found ~a in ~a~%"
+                   x args)))))
 
 (define build-tensor
   (λ (shape f)

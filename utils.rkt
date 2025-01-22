@@ -15,7 +15,6 @@
     [(_ test) (disable-unsafe-tests?) #'(check-true #t)]
     [(_ test) #'test]))
 
-;; TODO: Make custom clBuildProgram FFI binding which accepts the pfn_notify function pointer param
 (define-ffi-definer define-opencl (ffi-lib "libOpenCL"))
 
 (define-opencl clBuildProgram

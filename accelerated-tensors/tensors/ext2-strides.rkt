@@ -5,7 +5,7 @@
 (provide strides-null
          strides-cons
          (rename-out (ext2-strides-strides strides-strides)
-                     (ext2-strides-sign strides-signature)))
+                     (ext2-strides-sig strides-signature)))
 
 (define (strides-signature! ctx strides)
   (xxh32-update!
@@ -19,7 +19,7 @@
                      (integer->integer-bytes s2 4 #f)
                      (integer->integer-bytes s3 4 #f))))))
 
-(struct ext2-strides ((strides #:mutable) sign))
+(struct ext2-strides ((strides #:mutable) sig))
 
 (define strides-null
   (ext2-strides '() (let ((ctx (make-xxh32)))
@@ -30,7 +30,6 @@
     (let ((new-list (cons (vector st-out st0 st1)
                           (ext2-strides-strides strides))))
       (ext2-strides new-list
-                    (begin
-                      (let ((ctx (make-xxh32)))
-                        (strides-signature! ctx new-list)
-                        (~r (xxh32-digest ctx) #:base 16)))))))
+                    (let ((ctx (make-xxh32)))
+                      (strides-signature! ctx new-list)
+                      (~r (xxh32-digest ctx) #:base 16))))))

@@ -20,29 +20,40 @@
   (λ (a b)
     "@{a}-@{b}"))
 
+(define --0-0-∇-acc
+  (λ (a b z)
+    (values z "(- @{z})")))
+
 (define --0-0
   (prim2 -
          --0-0-ρ-acc
          (λ (a b z)
            (values z (- z)))
-         (λ (a b z)
-           (values z "(- @{z})"))))
+         --0-0-∇-acc))
 
 (define *-0-0-ρ-acc
   (λ (a b)
     "@{a}*@{b}"))
+
+(define *-0-0-∇-acc
+  (λ (a b z)
+    (values "@{b}*@{z}" "@{a}*@{z}")))
 
 (define *-0-0
   (prim2 *
          *-0-0-ρ-acc
          (λ (a b z)
            (values (* b z) (* a z)))
-         (λ (a b z)
-           (values "@{b}*@{z}" "@{a}*@{z}"))))
+         *-0-0-∇-acc))
 
 (define /-0-0-ρ-acc
   (λ (a b)
     "@{a}/@{b}"))
+
+(define /-0-0-∇-acc
+  (λ (a b z)
+    (values "(@{z} * (1 / @{b}))"
+            "(@{z} * ((- @{a}) / (@{b} * @{b})))")))
 
 (define /-0-0
   (prim2 /
@@ -50,13 +61,16 @@
          (λ (a b z)
            (values (* z (/ 1 b))
                    (* z (/ (- a) (* b b)))))
-         (λ (a b z)
-           (values "(@{z} * (1 / @{b}))"
-                   "(@{z} * ((- @{a}) / (@{b} * @{b})))"))))
+         /-0-0-∇-acc))
 
 (define expt-0-0-ρ-acc
   (λ (a b)
     "pow(@{a}, @{b})"))
+
+(define expt-0-0-∇-acc
+  (λ (a b z)
+    (values "(@{z} * (@{b} * pow(@{a}, (@{b} - 1))))"
+            "(@{z} * (pow(@{a}, @{b}) * log(@{a})))")))
 
 (define expt-0-0
   (prim2 expt
@@ -64,45 +78,52 @@
          (λ (a b z)
            (values (* z (* b (expt a (- b 1))))
                    (* z (* (expt a b) (log a)))))
-         (λ (a b z)
-           (values "(@{z} * (@{b} * pow(@{a}, (@{b} - 1))))"
-                   "(@{z} * (pow(@{a}, @{b}) * log(@{a})))"))))
+         expt-0-0-∇-acc))
 
 (define exp-0-ρ-acc
   (λ (a)
     "exp(@{a})"))
+
+(define exp-0-∇-acc
+  (λ (a z)
+    "(@{z} * exp(@{a}))"))
 
 (define exp-0
   (prim1 exp
          exp-0-ρ-acc
          (λ (a z)
            (* z (exp a)))
-         (λ (a z)
-           "(@{z} * exp(@{a}))")))
+         exp-0-∇-acc))
 
 (define log-0-ρ-acc
   (λ (a)
     "log(@{a})"))
+
+(define log-0-∇-acc
+  (λ (a z)
+    "(@{z} * (1 / @{a}))"))
 
 (define log-0
   (prim1 log
          log-0-ρ-acc
          (λ (a z)
            (* z (/ 1 a)))
-         (λ (a z)
-           "(@{z} * (1 / @{a}))")))
+         log-0-∇-acc))
 
 (define sqrt-0-ρ-acc
   (λ (a)
     "sqrt(@{a})"))
+
+(define sqrt-0-∇-acc
+  (λ (x z)
+    "(@{z} / (2 * sqrt(@{x})))"))
 
 (define sqrt-0
   (prim1 sqrt
          sqrt-0-ρ-acc
          (λ (x z)
            (/ z (* 2 (sqrt x))))
-         (λ (x z)
-           "(@{z} / (2 * sqrt(@{x})))")))
+         sqrt-0-∇-acc))
 
 (define abs-0-ρ
   (λ (x)

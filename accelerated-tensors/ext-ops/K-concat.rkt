@@ -26,7 +26,7 @@
   (λ (v0 i0 stride0
       v1 i1 stride1
       v-out i-out stride-out)
-  #<<EOF
+#<<EOF
     for(int i=0; i < @{stride-out}; i++) {
         if (i < @{stride0}) {
             @{v-out}[i+@{i-out}] = @{v0}[i+@{i0}];
@@ -57,13 +57,13 @@ EOF
       v1 i1 stride1
       vz iz stride-z)
     (values
-   #<<EOF
+#<<EOF
     for(int i=0; i < @{stride0}; i++) {
         @{g}[i+@{i0}] += @{vz}[i+@{iz}];
     }
 EOF
 
-   #<<EOF
+#<<EOF
     for(int i=@{stride0}; i < @{stride-z}; i++) {
         @{g}[i-@{stride0}+@{i1}] += @{vz}[i+@{iz}];
     }

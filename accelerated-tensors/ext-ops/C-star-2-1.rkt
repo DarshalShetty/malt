@@ -18,7 +18,7 @@
   (λ (v0 i0 stride0
       v1 i1 stride1
       v-out i-out stride-out)
-    #<<EOF
+#<<EOF
     for(int i=0; i<@{stride-out}; i++) {
         @{v-out}[@{i-out}+i] = @{v0}[@{i0}+i] * @{v1}[@{i1}+i%@{stride1}];
     }
@@ -44,7 +44,7 @@ EOF
       v1 i1 stride1
       vz iz stride-z)
     (values
-     #<<EOF
+#<<EOF
     for(int i=0; i<@{stride-z}; i++) {
         float b = @{v1}[@{i1}+i%@{stride1}];
         float z = @{vz}[@{iz}+i];
@@ -52,7 +52,7 @@ EOF
     }
 EOF
 
-     #<<EOF
+#<<EOF
     for(int i=0; i<@{stride-z}; i++) {
         float a = @{v0}[@{i0}+i];
         float z = @{vz}[@{iz}+i];

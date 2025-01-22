@@ -35,7 +35,7 @@
       (λ (v0 i0 _
           v1 i1 d
           v-out i-out b)
-        #<<EOF
+#<<EOF
     int i1_min = @{i1} - @{i1} % @{nd};
     int i1_max = i1_min + @{nd};
     for(int i=0; i<@{b}; i++) {
@@ -80,7 +80,7 @@ EOF
         v1 i1 d
         vz iz b)
       (values
-      #<<EOF
+#<<EOF
     int i1_min = @{i1} - @{i1} % @{nd};
     int i1_max = i1_min + @{nd};
     for(int i=0; i<@{b}; i++) {
@@ -95,7 +95,7 @@ EOF
     }
 EOF
 
-      #<<EOF
+#<<EOF
     int i1_min = @{i1} - @{i1} % @{nd};
     int i1_max = i1_min + @{nd};
     for(int i=0; i<@{b}; i++) {

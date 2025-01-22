@@ -11,7 +11,7 @@
 (define flatten-2-ρ-acc
   (λ (v0 i0 stride0
       v-out i-out stride-out)
-    #<<EOF
+#<<EOF
     for(int i=@{i0}; i<@{i0}+@{stride0}; i++) {
         @{v-out}[i] = @{v0}[i];
     }
@@ -25,7 +25,7 @@ EOF
 (define flatten-2-∇-acc
   (λ (g0 v0 i0 stride0
       vz iz stride-z)
-    #<<EOF
+#<<EOF
     for(int i=@{i0}; i<@{i0}+@{stride0}; i++) {
         @{g0}[i] += @{vz}[i];
     }

@@ -15,7 +15,7 @@
 (define sum-1-ρ-acc
   (λ (v0 i0 stride0
       v-out i-out stride-out)
-  #<<EOF
+#<<EOF
     float sum = 0;
     for (int i=@{i0}; i < @{i0}+@{stride0}; i++) {
         sum += @{v0}[i];
@@ -35,7 +35,7 @@ EOF
 (define sum-1-∇-acc
   (λ (g0 v0 i0 stride0
       vz iz stride-z)
-  #<<EOF
+#<<EOF
     float z = @{vz}[@{iz}];
     for (int i=@{i0}; i < @{i0}+@{stride0}; i++) {
         @{g0}[i] += z;
@@ -68,7 +68,7 @@ EOF
 
 (define sum-cols-2-ρ-acc
   (λ (v0 i0 stride0 v-out i-out stride-out)
-    #<<EOF
+#<<EOF
     for(int i=0; i<@{stride-out}; i++) {
         float sum = 0.0;
         for(int j=@{i0}; j<@{i0}+@{stride0}; j+=@{stride-out}) {
@@ -90,7 +90,7 @@ EOF
 (define sum-cols-2-∇-acc
   (λ (g0 v0 i0 stride0
          vz iz stride-z)
-    #<<EOF
+#<<EOF
     for(int i=0; i<@{stride-z}; i++) {
         for(int j=@{i0}; j<@{i0}+@{stride0}; j+=@{stride-z}) {
             @{g0}[i+j] += @{vz}[i+@{iz}];

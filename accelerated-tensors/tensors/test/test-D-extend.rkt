@@ -13,7 +13,7 @@
 
   (define sum-f-acc
     (λ (v0 i0 stride0 v-out i-out stride-out)
-      #<<EOF
+#<<EOF
     float sum = 0;
     for (int i=@{i0}; i < @{i0}+@{stride0}; i++) {
         sum += @{v0}[i];
@@ -55,7 +55,7 @@ EOF
 
   (define dup-f-acc
     (λ (v0 i0 stride0 v-out i-out stride-out)
-      #<<EOF
+#<<EOF
     for (int i=0; i < @{stride-out}; i++) {
         @{v-out}[@{i-out}+i] = @{v0}[@{i0} + (i % @{stride0})];
     }
@@ -149,7 +149,7 @@ EOF
              (vref v1 (+ i1 (modulo j0 s1))))))))
   (define *-2-1-f-acc
     (λ (v0 i0 s0 v1 i1 s1 vout iout sout)
-      #<<EOF
+#<<EOF
     for (int j0=0; j0<@{s0}; j0++) {
         @{vout}[@{iout} + j0] = @{v0}[@{i0} + j0] * @{v1}[@{i1} + j0 % @{s1}];
     }
@@ -286,7 +286,7 @@ EOF
         (vset! g i (vref vz iz)))))
   (define sum-1-∇-acc
     (λ (g0 v0 i0 stride0 vz iz stride-z)
-      #<<EOF
+#<<EOF
     float z = @{vz}[@{iz}];
     for (int i=@{i0}; i < @{i0}+@{stride0}; i++) {
         @{g0}[i] += z;
